@@ -12,6 +12,7 @@ Tauno Erik
 
 #define BTN_PIN     2  // GP2 - pin 4
 #define BTN_LED_PIN 3  // GP3 - pin 5
+#define LED  CYW43_WL_GPIO_LED_PIN
 
 static char event_str[128];
 
@@ -58,7 +59,7 @@ int main() {
 
     if (cyw43_arch_init()) {
         printf("Wi-Fi init failed");
-        return 1;
+        return -1;
     }
 
     // BTN - interrupt
@@ -71,11 +72,11 @@ int main() {
     gpio_put(BTN_LED_PIN, 0);
 
     while (true) {
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 1);
+        cyw43_arch_gpio_put(BTN_LED_PIN, 1);
         printf("LED on\n");
         sleep_ms(500);
 
-        cyw43_arch_gpio_put(CYW43_WL_GPIO_LED_PIN, 0);
+        cyw43_arch_gpio_put(BTN_LED_PIN, 0);
         printf("LED off\n");
         sleep_ms(500);
     }
